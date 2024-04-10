@@ -1,11 +1,15 @@
 import React, { useEffect, useReducer } from 'react';
 import { generateClient } from 'aws-amplify/api';
-import { List } from 'antd';
 import 'antd/dist/reset.css';
+import { v4 as uuid } from 'uuid';
 import { listNotes } from './graphql/queries';
+import { createNote as CreateNote} from './graphql/mutations';
+import { List, Input, Button } from 'antd';
 
 import logo from './logo.svg';
 import './App.css';
+
+const CLIEND_ID = uuid();
 
 
 const initialState = {
