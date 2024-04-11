@@ -78,22 +78,23 @@ const createNote = async () => {
     }
 };
 
-const deleteNote = async({ id }) => {
+    const deleteNote = async({ id }) => {
     const index = state.notes.findIndex(n => n.id === id)
     const notes = [
-      ...state.notes.slice(0, index), // TODO add a filter?
+      ...state.notes.slice(0, index),
       ...state.notes.slice(index + 1)];
     dispatch({ type: 'SET_NOTES', notes })
     try {
-      await client.graphql({
+        await client.graphql({
         query: DeleteNote,
         variables: { input: { id } }
       })
       console.log('successfully deleted note!')
       } catch (err) {
-        console.error(err)
+        console.log({ err })
     }
-  };
+  }
+
 
 const updateNote = async(note) => {
     const index = state.notes.findIndex(n => n.id === note.id)
@@ -140,14 +141,12 @@ const onChange = (e) => {
 
     function renderItem(item) {
         return (
-            <List.Item 
+            <List.Item
                 style={styles.item}
                 actions={[
-                    <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
-                    <p style={styles.p} onClick={() => updateNote(item)}>
-                        {item.completed ? 'completed' : 'mark completed'}
-                    </p>
-                  ]}>
+                    <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>
+                ]}
+            >
             <List.Item.Meta
                 title={item.name}
                 description={item.description}
