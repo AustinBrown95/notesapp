@@ -78,7 +78,7 @@ const createNote = async () => {
     }
 };
 
-    const deleteNote = async({ id }) => {
+const deleteNote = async({ id }) => {
     const index = state.notes.findIndex(n => n.id === id)
     const notes = [
       ...state.notes.slice(0, index),
@@ -93,7 +93,7 @@ const createNote = async () => {
       } catch (err) {
         console.log({ err })
     }
-  }
+}
 
 
 const updateNote = async(note) => {
@@ -110,6 +110,8 @@ const updateNote = async(note) => {
     } catch (err) {
         console.errror(err)
     }
+
+    
 };
     
 const onChange = (e) => {
@@ -144,7 +146,12 @@ const onChange = (e) => {
             <List.Item
                 style={styles.item}
                 actions={[
-                    <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>
+                    <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
+                    <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
+                    <p style={styles.p} onClick={() => updateNote(item)}>
+                    {item.completed ? 'completed' : 'mark completed'}
+    </p>
+                    
                 ]}
             >
             <List.Item.Meta
@@ -152,6 +159,7 @@ const onChange = (e) => {
                 description={item.description}
             />
             </List.Item>
+            
         )
     };  
 
