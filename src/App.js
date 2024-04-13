@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useEffect, useReducer} from 'react';
+import React, {useEffect, useReducer, useState} from 'react';
 // V6: https://docs.amplify.aws/react/build-a-backend/graphqlapi/set-up-graphql-api/#add-your-first-record
 import { generateClient } from 'aws-amplify/api';
 import { List, Input, Button } from 'antd';
@@ -41,6 +41,7 @@ function reducer(state, action) {
 
 const App = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [completedCount, setCompletedCount] = useState(0);
 
     const client = generateClient();
 
@@ -99,6 +100,8 @@ const deleteNote = async({ id }) => {
 const updateNote = async(note) => {
     const index = state.notes.findIndex(n => n.id === note.id)
     const notes = [...state.notes]
+    const updatedCompletedCount = note.completed ? completedCount - 1 : completedCount + 1;
+    setCompletedCount(updatedCompletedCount);
     notes[index].completed = !note.completed
     dispatch({ type: 'SET_NOTES', notes})
     try {
@@ -141,17 +144,27 @@ const onChange = (e) => {
         p: { color: '#1890ff' }
     }
 
+
+
     function renderItem(item) {
         return (
             <List.Item
                 style={styles.item}
                 actions={[
-                    <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
-                    <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
-                    <p style={styles.p} onClick={() => updateNote(item)}>
-                    {item.completed ? 'completed' : 'mark completed'}
-    </p>
-                    
+                    <div key="mark-as-completed">
+                        <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
+                        <p style={styles.p} onClick={() => updateNote(item)}>
+                            {item.completed ? 'Completed' : 'Incomplete'}
+                        </p>
+                        <div>
+                        <input
+                              type="checkbox"
+                              checked={item.completed}
+                              onChange={() => updateNote(item)}
+                              
+                          />
+                        </div>
+                    </div>
                 ]}
             >
             <List.Item.Meta
@@ -188,6 +201,8 @@ const onChange = (e) => {
                 dataSource={state.notes}
                 renderItem={renderItem}
             />
+            <p>Total completed items: {completedCount}</p>
+            <button key="delete" class="red-button" style={styles.resetButton} onClick={() => setCompletedCount(0)}>Reset</button>
       </div>
       );
     }
