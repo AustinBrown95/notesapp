@@ -41,7 +41,7 @@ function reducer(state, action) {
 
 const App = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
-    const [completedCount, setCompletedCount] = useState(0);
+
 
     const client = generateClient();
 
@@ -51,11 +51,11 @@ const App = () => {
             query: listNotes
           });
           dispatch({ type: 'SET_NOTES', notes: notesData.data.listNotes.items });
-        } catch (err) {
+      } catch (err) {
           console.error(err);
           dispatch({ type: 'ERROR' });
-        }
-      };
+      }
+  };
 
 const createNote = async () => {
     const { form } = state // destructuring - form element out of state
@@ -73,13 +73,14 @@ const createNote = async () => {
         query: CreateNote,
         variables: { input: note }
         })
-        console.log('successfully created note!')
+        console.log('successfully created note!');
     } catch (err) {
         console.error("error: ", err)
     }
 };
 
 const deleteNote = async({ id }) => {
+    const { completed } = id;
     const index = state.notes.findIndex(n => n.id === id)
     const notes = [
       ...state.notes.slice(0, index),
@@ -100,8 +101,6 @@ const deleteNote = async({ id }) => {
 const updateNote = async(note) => {
     const index = state.notes.findIndex(n => n.id === note.id)
     const notes = [...state.notes]
-    const updatedCompletedCount = note.completed ? completedCount - 1 : completedCount + 1;
-    setCompletedCount(updatedCompletedCount);
     notes[index].completed = !note.completed
     dispatch({ type: 'SET_NOTES', notes})
     try {
@@ -111,10 +110,8 @@ const updateNote = async(note) => {
         })
         console.log('note successfully updated!')
     } catch (err) {
-        console.errror(err)
+        console.error(err)
     }
-
-    
 };
     
 const onChange = (e) => {
@@ -144,6 +141,11 @@ const onChange = (e) => {
         p: { color: '#1890ff' }
     }
 
+    function sortNotesByName(notes) {
+        return [...notes].sort((a, b) => a.name.localeCompare(b.name));
+      }
+    
+      const sortedNotes = sortNotesByName(state.notes);
 
 
     function renderItem(item) {
@@ -201,8 +203,8 @@ const onChange = (e) => {
                 dataSource={state.notes}
                 renderItem={renderItem}
             />
-            <p>Total completed items: {completedCount}</p>
-            <button key="delete" class="red-button" style={styles.resetButton} onClick={() => setCompletedCount(0)}>Reset</button>
+            <p><b>Total Items to do:</b> {sortedNotes.length}</p>
+
       </div>
       );
     }
