@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.1635656d.css",
-    "main.js": "/static/js/main.8d7be67d.js",
-    "static/js/453.1291478c.chunk.js": "/static/js/453.1291478c.chunk.js",
-    "index.html": "/index.html",
-    "main.1635656d.css.map": "/static/css/main.1635656d.css.map",
-    "main.8d7be67d.js.map": "/static/js/main.8d7be67d.js.map",
-    "453.1291478c.chunk.js.map": "/static/js/453.1291478c.chunk.js.map"
+    "main.css": "/AustinBrown95/notesapp/static/css/main.1635656d.css",
+    "main.js": "/AustinBrown95/notesapp/static/js/main.17980780.js",
+    "static/js/453.1291478c.chunk.js": "/AustinBrown95/notesapp/static/js/453.1291478c.chunk.js",
+    "index.html": "/AustinBrown95/notesapp/index.html",
+    "main.1635656d.css.map": "/AustinBrown95/notesapp/static/css/main.1635656d.css.map",
+    "main.17980780.js.map": "/AustinBrown95/notesapp/static/js/main.17980780.js.map",
+    "453.1291478c.chunk.js.map": "/AustinBrown95/notesapp/static/js/453.1291478c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1635656d.css",
-    "static/js/main.8d7be67d.js"
+    "static/js/main.17980780.js"
   ]
 }
